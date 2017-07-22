@@ -67,3 +67,6 @@ DerivedDataCache/*
 
 # Ignore Startercontent
 Content/StarterContent/*
+
+# Ignore Standalone Folger
+StandAlone
