@@ -64,3 +64,6 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Ignore Startercontent
+Content/StarterContent/*
