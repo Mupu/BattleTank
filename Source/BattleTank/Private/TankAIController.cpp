@@ -33,3 +33,13 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogActor, Error, TEXT("No PlayerTank found!"));
 	}
 }
+
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (GetControlledTank())
+	{
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	}
+}

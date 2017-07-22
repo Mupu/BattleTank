@@ -5,8 +5,6 @@
 #include "DrawDebugHelpers.h"
 #include "Camera/PlayerCameraManager.h"
 
-#define OUT
-
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -35,7 +33,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
