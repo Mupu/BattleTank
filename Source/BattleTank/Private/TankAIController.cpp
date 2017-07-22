@@ -27,17 +27,9 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogActor, Error, TEXT("AI not possessing a tank!"));
 	}
-	else
-	{
-		UE_LOG(LogActor, Warning, TEXT("AI possessing tank: %s"), *GetControlledTank()->GetName());
-	}
 
 	if (!GetPlayerTank())
 	{
 		UE_LOG(LogActor, Error, TEXT("No PlayerTank found!"));
-	}
-	else
-	{
-		UE_LOG(LogActor, Warning, TEXT("Found PlayerTank: %s"), *GetPlayerTank()->GetName());
 	}
 }
