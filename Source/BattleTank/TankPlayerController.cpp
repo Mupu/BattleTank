@@ -5,6 +5,11 @@
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	Cast<ATank>(GetPawn());
+	return Cast<ATank>(GetPawn());
 }
 
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	UE_LOG(LogActor, Warning, TEXT("%s"), *GetControlledTank()->GetName());
+}
