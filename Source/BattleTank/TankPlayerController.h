@@ -18,6 +18,8 @@ private:
 
 	UPROPERTY(EditAnywhere) float CrossHairYLocation = 0.3333;
 
+	UPROPERTY(EditAnywhere) int LineTraceRange = 1000000;
+
 	virtual void BeginPlay() override;
 
 	virtual void Tick( float DeltaSeconds ) override;
@@ -29,4 +31,6 @@ private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const;
 };
