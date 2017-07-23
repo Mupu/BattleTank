@@ -16,16 +16,16 @@ void ATankPlayerController::BeginPlay()
 	}
 }
 
+ATank* ATankPlayerController::GetControlledTank() const
+{
+	return Cast<ATank>(GetPawn());
+}
+
 void ATankPlayerController::Tick( float DeltaSeconds )
 {
 	Super::Tick( DeltaSeconds );
 
 	AimTowardsCrosshair();
-}
-
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::AimTowardsCrosshair()

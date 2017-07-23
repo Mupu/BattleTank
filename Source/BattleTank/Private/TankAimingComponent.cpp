@@ -28,7 +28,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
-
+	HitLocation = HitLocation + 0.01f; // Negates the floating point error when HitLocation.Z = 0
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	if (UGameplayStatics::SuggestProjectileVelocity(
@@ -44,15 +44,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			)
 		)
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveTurretAndBarrelTowards(AimDirection);
+		MoveTurretAndBarrelTowards(OutLaunchVelocity);
+		// TODO turn turret no matter raycast hits something or not
+	}
+	else
+	{
+		//float Time = GetWorld()->GetTimeSeconds();
+		//UE_LOG(LogTemp, Warning, TEXT("%f: NO:   %s"), Time, *HitLocation.ToString());
+
+		// TODO turn barrel to natural position
 	}
 }
 
-void UTankAimingComponent::MoveTurretAndBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveTurretAndBarrelTowards(FVector LaunchVelocity)
 {
+	LaunchVelocity = LaunchVelocity.GetSafeNormal();
+
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
-	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator AimAsRotator = LaunchVelocity.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.GetNormalized().Pitch);
