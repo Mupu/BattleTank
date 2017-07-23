@@ -11,7 +11,7 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 // Sets default values
 ATank::ATank()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
@@ -21,12 +21,6 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void ATank::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input
