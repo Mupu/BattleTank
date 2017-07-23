@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
+#include "Public/Tank.h"
 #include "DrawDebugHelpers.h"
 #include "Camera/PlayerCameraManager.h"
 

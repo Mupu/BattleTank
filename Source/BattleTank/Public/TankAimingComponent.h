@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GameFramework/Pawn.h"
-#include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel;
