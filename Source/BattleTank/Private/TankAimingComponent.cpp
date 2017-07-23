@@ -28,6 +28,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
+	if (!Turret) { return; }
 	HitLocation = HitLocation + 0.01f; // Negates the floating point error when HitLocation.Z = 0
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -46,12 +47,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		MoveTurretAndBarrelTowards(OutLaunchVelocity);
 		// TODO turn turret no matter raycast hits something or not
+		//UE_LOG(LogTemp, Warning, TEXT(""));
 	}
 	else
 	{
-		//float Time = GetWorld()->GetTimeSeconds();
-		//UE_LOG(LogTemp, Warning, TEXT("%f: NO:   %s"), Time, *HitLocation.ToString());
-
 		// TODO turn barrel to natural position
 	}
 }
