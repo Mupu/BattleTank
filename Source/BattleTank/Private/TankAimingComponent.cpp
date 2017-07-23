@@ -9,7 +9,7 @@
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 
@@ -45,26 +45,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
-		RotateTurretTowards(AimDirection);
+		MoveTurretAndBarrelTowards(AimDirection);
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveTurretAndBarrelTowards(FVector AimDirection)
 {
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 
-	Barrel->Elevate(DeltaRotator.Pitch);
-}
-
-void UTankAimingComponent::RotateTurretTowards(FVector RotateDirection)
-{
-	FRotator TurretRotator = Barrel->GetForwardVector().Rotation();
-	FRotator RotateAsRotator = RotateDirection.Rotation();
-	FRotator DeltaRotator = RotateAsRotator - TurretRotator;
-
-	Turret->Rotate(DeltaRotator.Yaw);
+	Barrel->Elevate(DeltaRotator.GetNormalized().Pitch);
+	Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
 }
 
