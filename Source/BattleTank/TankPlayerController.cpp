@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "TankPlayerController.h"
 #include "Engine/World.h"
 #include "Projectile.h"
@@ -8,26 +6,16 @@
 #include "Tank.h"
 #include "Camera/PlayerCameraManager.h"
 
-void ATankPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
-
-	if (!GetControlledTank())
-	{
-		UE_LOG(LogActor, Error, TEXT("Player not possessing a tank!"));
-	}
-}
-
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::Tick( float DeltaSeconds )
 {
 	Super::Tick( DeltaSeconds );
 
 	AimTowardsCrosshair();
+}
+
+ATank* ATankPlayerController::GetControlledTank() const
+{
+	return Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
@@ -38,9 +26,9 @@ void ATankPlayerController::AimTowardsCrosshair()
 	// Set HitLocation of point you looking at, if posible
 	GetScreenPointRayHitLocation(HitLocation);
 	GetControlledTank()->AimAt(HitLocation);
-	
 }
 
+// Calculate the direction you are looking at through a point of the screen
 bool ATankPlayerController::GetScreenPointRayHitLocation(FVector& OutHitLocation) const
 {
 	int32 ViewPortSizeX, ViewPortSizeY;
@@ -48,7 +36,6 @@ bool ATankPlayerController::GetScreenPointRayHitLocation(FVector& OutHitLocation
 	FVector2D ScreenLocation( ViewPortSizeX * CrossHairXLocation,  ViewPortSizeY * CrossHairYLocation );
 	FVector OutLookDirection;
 	FVector CameraWorldLocation; // To be discarded
-	// Calculate direction we are looking at through the point of the screen
 	if (DeprojectScreenPositionToWorld(
 		ScreenLocation.X,
 		ScreenLocation.Y,
@@ -59,7 +46,7 @@ bool ATankPlayerController::GetScreenPointRayHitLocation(FVector& OutHitLocation
 	}
 	return false;
 }
-
+ 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
 	FHitResult HitResult;

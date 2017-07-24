@@ -17,9 +17,5 @@ public:
 private:	
 	AProjectile();
 
-	//virtual void BeginPlay() override;
-	
-	//virtual void Tick(float DeltaTime) override;
-
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 };

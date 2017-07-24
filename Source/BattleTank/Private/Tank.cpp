@@ -4,6 +4,27 @@
 #include "Engine/World.h"
 #include "TankAimingComponent.h"
 
+ATank::ATank()
+{
+	PrimaryActorTick.bCanEverTick = false;
+}
+
+void ATank::SetTankAimingComponentReference(UTankAimingComponent * TankAimingComponentToSet)
+{
+	if (!TankAimingComponentToSet) { return; }
+	TankAimingComponent = TankAimingComponentToSet;
+}
+
+void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
+{
+	if (!BarrelToSet) { return; }
+	if (TankAimingComponent)
+	{
+		TankAimingComponent->SetBarrelReference(BarrelToSet);
+	}
+	Barrel = BarrelToSet;
+}
+
 void ATank::Fire()
 {
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
@@ -17,38 +38,6 @@ void ATank::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
-}
-
-void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	if (!BarrelToSet) { return; }
-	if (!TankAimingComponent) { return; }
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
-	Barrel = BarrelToSet;
-}
-
-void ATank::SetTurretReference(UTankTurret * TurretToSet)
-{
-	if (!TurretToSet) { return; }
-	if (!TankAimingComponent)
-	{ 
-		UE_LOG(LogTemp, Error, TEXT("%s: NoTankAimingComponentFound"), *GetName());
-		return; 
-	}
-	TankAimingComponent->SetTurretReference(TurretToSet);
-}
-
-void ATank::SetTankAimingComponentReference(UTankAimingComponent * TankAimingComponentToSet)
-{
-	if (!TankAimingComponentToSet) { return; }
-	TankAimingComponent = TankAimingComponentToSet;
-}
-
-ATank::ATank()
-{
-	PrimaryActorTick.bCanEverTick = false;
-
-	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
 void ATank::AimAt(FVector HitLocation)

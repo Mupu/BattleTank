@@ -13,16 +13,24 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
-	if (!BarrelToSet) { return; }
+	if (!BarrelToSet) 
+	{ 
+		UE_LOG(LogTemp, Error, TEXT("%s in %s:Unable to set Barrel!"), *GetName(), *GetOwner()->GetName());
+		return; 
+	}
 	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 {
-	if (!TurretToSet) { return; }
+	if (!TurretToSet)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s in %s:Unable to set Barrel!"), *GetName(), *GetOwner()->GetName());
+		return;
+	}
 	Turret = TurretToSet;
 }
-// TODO DEBUG WHEN TANK IS TILTED ON AN EDGE
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -36,9 +44,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	for (TSubclassOf<AActor> Actor : ActorsToIgnoreForTrace)
 	{
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), Actor, FoundActorsToIgnore);
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *Actor->GetName());
 	}
-
+	
 	if (UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OutLaunchVelocity,
@@ -49,7 +56,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0,
 		0,
 		ESuggestProjVelocityTraceOption::TraceFullPath,
-		FCollisionResponseParams::DefaultResponseParam,
+		FCollisionResponseParams(ECollisionResponse::ECR_Block),
 		FoundActorsToIgnore,
 		false
 		)

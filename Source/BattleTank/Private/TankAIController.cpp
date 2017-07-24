@@ -3,6 +3,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 
+// Aim and fire at the player
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
