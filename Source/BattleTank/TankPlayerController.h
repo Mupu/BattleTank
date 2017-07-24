@@ -14,6 +14,8 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 private:
+	UPROPERTY(EditDefaultsOnly, Category = Setup) TArray<TSubclassOf<AActor>> ActorsToIgnoreForTrace;
+
 	UPROPERTY(EditDefaultsOnly, Category = Setup) float CrossHairXLocation = 0.5;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup) float CrossHairYLocation = 0.3333;

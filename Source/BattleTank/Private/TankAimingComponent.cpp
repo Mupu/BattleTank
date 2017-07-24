@@ -42,15 +42,15 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	)
 	{
 		OutLaunchVelocity = OutLaunchVelocity.GetSafeNormal();
-		FRotator Rotator = Barrel->GetForwardVector().Rotation();
+		UE_LOG(LogTemp, Warning, TEXT("%s : OutLaunchVelocity"), *OutLaunchVelocity.ToString());
+		FRotator Rotator = Barrel->GetForwardVector().Rotation(); 
 		FRotator AimAsRotator = OutLaunchVelocity.Rotation();
 		FRotator DeltaRotator = AimAsRotator - Rotator;
-
 		Barrel->Elevate(DeltaRotator.GetNormalized().Pitch);
 		Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
 	}
 	else
-	{
+	{/*
 		// Player Controlled Tank
 		ATank* TankTheComponentSitsIn = Cast<ATank>(GetOwner());
 		if (TankTheComponentSitsIn->IsPlayerControlled())
@@ -73,7 +73,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			// AI Controlled Tank
 			// Move the barrel down to it's natural position when no target
 			Barrel->Elevate(-1);
-		}
+		}*/
 	}
 }
 

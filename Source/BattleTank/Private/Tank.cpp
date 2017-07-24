@@ -6,6 +6,7 @@
 
 void ATank::Fire()
 {
+	UE_LOG(LogTemp, Warning, TEXT("FIRE"));
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 	if (Barrel && bIsReloaded) {
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
