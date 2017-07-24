@@ -1,17 +1,17 @@
 #include "Projectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 AProjectile::AProjectile()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	ProjectileMovementComponent = CreateDefaultSubobject <UProjectileMovementComponent>(FName("Projectile Movement Component"));
+	ProjectileMovementComponent->bAutoActivate = false;
 }
 
-void AProjectile::BeginPlay()
+void AProjectile::LaunchProjectile(float Speed)
 {
-	Super::BeginPlay();
-}
-
-void AProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
+	ProjectileMovementComponent->Activate();
 }
 
