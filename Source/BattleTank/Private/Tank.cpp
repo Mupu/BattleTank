@@ -6,7 +6,6 @@
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("FIRE"));
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 	if (Barrel && bIsReloaded) {
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -39,11 +38,17 @@ void ATank::SetTurretReference(UTankTurret * TurretToSet)
 	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
+void ATank::SetTankAimingComponentReference(UTankAimingComponent * TankAimingComponentToSet)
+{
+	if (!TankAimingComponentToSet) { return; }
+	TankAimingComponent = TankAimingComponentToSet;
+}
+
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
 void ATank::AimAt(FVector HitLocation)

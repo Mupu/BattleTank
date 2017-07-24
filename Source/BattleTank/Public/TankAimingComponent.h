@@ -22,6 +22,8 @@ public:
 private:
 	UTankAimingComponent();
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup) TArray<TSubclassOf<AActor>> ActorsToIgnoreForTrace;
+
 	UTankBarrel* Barrel = nullptr;
 
 	UTankTurret* Turret = nullptr;

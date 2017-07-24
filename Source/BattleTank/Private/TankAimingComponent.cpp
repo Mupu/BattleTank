@@ -30,6 +30,15 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	HitLocation = HitLocation + 0.01f; // Negates the floating point error when HitLocation.Z = 0
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	// Find all actor instances to ignore and ignore them
+	TArray<AActor*> FoundActorsToIgnore;
+	for (TSubclassOf<AActor> Actor : ActorsToIgnoreForTrace)
+	{
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), Actor, FoundActorsToIgnore);
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *Actor->GetName());
+	}
+
 	if (UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OutLaunchVelocity,
@@ -37,12 +46,16 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		HitLocation,
 		LaunchSpeed,
 		false,
-		ESuggestProjVelocityTraceOption::DoNotTrace
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::TraceFullPath,
+		FCollisionResponseParams::DefaultResponseParam,
+		FoundActorsToIgnore,
+		false
 		)
 	)
 	{
 		OutLaunchVelocity = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s : OutLaunchVelocity"), *OutLaunchVelocity.ToString());
 		FRotator Rotator = Barrel->GetForwardVector().Rotation(); 
 		FRotator AimAsRotator = OutLaunchVelocity.Rotation();
 		FRotator DeltaRotator = AimAsRotator - Rotator;
@@ -50,7 +63,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
 	}
 	else
-	{/*
+	{
 		// Player Controlled Tank
 		ATank* TankTheComponentSitsIn = Cast<ATank>(GetOwner());
 		if (TankTheComponentSitsIn->IsPlayerControlled())
@@ -73,7 +86,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			// AI Controlled Tank
 			// Move the barrel down to it's natural position when no target
 			Barrel->Elevate(-1);
-		}*/
+		}
 	}
 }
 
