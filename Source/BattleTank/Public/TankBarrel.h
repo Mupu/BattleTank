@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -17,7 +15,10 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere) float MaxDegreesPerSecond = 5;
+
 	UPROPERTY(EditAnywhere) float MaxElevationDegrees = 35;
+
 	UPROPERTY(EditAnywhere) float MinElevationDegrees = 0;
 
+	UTankBarrel();
 };

@@ -1,7 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "TankBarrel.h"
 #include "Engine/World.h"
+
+UTankBarrel::UTankBarrel()
+{
+	PrimaryComponentTick.bCanEverTick = false;
+}
 
 void UTankBarrel::Elevate(float RelativeSpeed)
 {

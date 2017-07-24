@@ -1,6 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-#include "Public/TankAIController.h"
+#include "TankAIController.h"
 #include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
@@ -23,7 +21,6 @@ ATank* ATankAIController::GetPlayerTank() const
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
 	if (!GetControlledTank())
 	{
 		UE_LOG(LogActor, Error, TEXT("AI not possessing a tank!"));
