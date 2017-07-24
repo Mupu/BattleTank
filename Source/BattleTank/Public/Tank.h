@@ -17,7 +17,7 @@ class BATTLETANK_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UPROPERTY(EditAnywhere, Category = Setup) TSubclassOf<AProjectile> ProjectileBP;
+	UPROPERTY(EditDefaultsOnly, Category = Setup) TSubclassOf<AProjectile> ProjectileBP;
 
 	UFUNCTION(BlueprintCallable) void SetBarrelReference(UTankBarrel* BarrelToSet);
 
@@ -28,9 +28,9 @@ public:
 private:
 	ATank();
 
-	UPROPERTY(EditAnywhere, Category = Firing) float LaunchSpeed = 4000;
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float LaunchSpeed = 4000;
 
-	UPROPERTY(EditAnywhere, Category = Firing) float ReloadTimeInSeconds = 1;
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float ReloadTimeInSeconds = 1;
 
 	double LastFireTime = 0;
 

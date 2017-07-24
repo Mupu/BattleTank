@@ -28,7 +28,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (!Barrel) { return; }
 	if (!Turret) { return; }
 	HitLocation = HitLocation + 0.01f; // Negates the floating point error when HitLocation.Z = 0
-	const TArray<AActor*> x;
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	if (UGameplayStatics::SuggestProjectileVelocity(
@@ -42,7 +41,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		)
 	)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%s"), *OutLaunchVelocity.ToString()));
 		OutLaunchVelocity = OutLaunchVelocity.GetSafeNormal();
 		FRotator Rotator = Barrel->GetForwardVector().Rotation();
 		FRotator AimAsRotator = OutLaunchVelocity.Rotation();

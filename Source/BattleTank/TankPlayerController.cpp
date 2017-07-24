@@ -2,6 +2,9 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
+#include "Projectile.h"
+#include "Engine.h"
+#include "Kismet/GameplayStatics.h"
 #include "Tank.h"
 #include "Camera/PlayerCameraManager.h"
 
@@ -59,29 +62,25 @@ bool ATankPlayerController::GetScreenPointRayHitLocation(FVector& OutHitLocation
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
 {
-	TArray<FHitResult> HitResults;
-	FCollisionQueryParams IgnoreSelfQueryParam;
-	IgnoreSelfQueryParam.AddIgnoredActor(GetPawn());
+	FHitResult HitResult;
+	FCollisionQueryParams IgnoredActors;
+	IgnoredActors.AddIgnoredActor(GetPawn()); //TODO ignore projectile
+
 	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
 	FVector EndLocation = StartLocation + LookDirection * LineTraceRange;
 	// RayCast return first HitResult Location with IgnoreSelf on true
-	if (GetWorld()->LineTraceMultiByObjectType(
-		HitResults,
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
 		StartLocation,
 		EndLocation,
-		FCollisionObjectQueryParams(ECC_TO_BITFIELD(ECC_WorldDynamic) | ECC_TO_BITFIELD(ECC_WorldStatic)),
-		IgnoreSelfQueryParam
+		ECollisionChannel::ECC_Visibility,
+		IgnoredActors
 		)
 		)
 	{
-		for (FHitResult HitResult : HitResults)
-		{
-			if (!GetPawn()->GetName().Equals(*HitResult.Actor->GetName()))
-			{
-				OutHitLocation = HitResult.Location;
-				return true;
-			}
-		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("%s"), *HitResult.GetActor()->GetName()));
+		OutHitLocation = HitResult.Location;
+		return true;
 	}
 	return false;
 }
