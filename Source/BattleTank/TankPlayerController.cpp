@@ -31,7 +31,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 	// Default set to aimpoint where it definitely cant reach
-	FVector HitLocation{ 9999999, 9999999, 9999999 };
+	FVector HitLocation{ NAN, NAN, NAN };
 	// Set HitLocation of point you looking at, if posible
 	GetScreenPointRayHitLocation(HitLocation);
 	GetControlledTank()->AimAt(HitLocation);

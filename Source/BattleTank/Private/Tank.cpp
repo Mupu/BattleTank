@@ -1,6 +1,12 @@
 #include "Public/Tank.h"
 #include "TankAimingComponent.h"
 
+void ATank::Fire()
+{
+	
+	return;
+}
+
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	if (!BarrelToSet) { return; }
