@@ -68,7 +68,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		FRotator DeltaRotator = AimAsRotator - Rotator;
 		Barrel->Elevate(DeltaRotator.GetNormalized().Pitch);
 		Turret->Rotate(DeltaRotator.GetNormalized().Yaw);
-	}
+	} 
 	else
 	{
 		// Player Controlled Tank
