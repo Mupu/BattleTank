@@ -7,6 +7,7 @@
 class AProjectile;
 class UTankBarrel;
 class UTankAimingComponent;
+class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -21,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable) void SetTankAimingComponentReference(UTankAimingComponent* TankAimingComponentToSet);
 
 	UFUNCTION(BlueprintCallable) void Fire();
+
+protected:
+	UPROPERTY(BlueprintReadOnly) UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 	ATank();
