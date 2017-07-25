@@ -15,9 +15,7 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
-	UFUNCTION(BlueprintCallable) void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable) void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable) void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 private:
 	UTankAimingComponent();

@@ -8,24 +8,14 @@
 ATank::ATank()
 {
 	PrimaryActorTick.bCanEverTick = false;
-
-	CreateDefaultSubobject<UTankMovementComponent>(FName("Tank Movement Component"));
 }
 
-void ATank::SetTankAimingComponentReference(UTankAimingComponent * TankAimingComponentToSet)
+void ATank::Initialise(UTankBarrel* BarrelToSet, UTankAimingComponent* TankAimingComponentToSet, UTankMovementComponent* TankMovementComponentToSet)
 {
-	if (!TankAimingComponentToSet) { return; }
-	TankAimingComponent = TankAimingComponentToSet;
-}
-
-void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
-{
-	if (!BarrelToSet) { return; }
-	if (TankAimingComponent)
-	{
-		TankAimingComponent->SetBarrelReference(BarrelToSet);
-	}
+	if (!BarrelToSet || !TankAimingComponentToSet || !TankMovementComponentToSet) { return; }
 	Barrel = BarrelToSet;
+	TankAimingComponent = TankAimingComponentToSet;
+	TankMovementComponent = TankMovementComponentToSet;
 }
 
 void ATank::Fire()

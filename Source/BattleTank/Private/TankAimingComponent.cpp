@@ -11,23 +11,10 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!BarrelToSet) 
-	{ 
-		UE_LOG(LogTemp, Error, TEXT("%s in %s:Unable to set Barrel!"), *GetName(), *GetOwner()->GetName());
-		return; 
-	}
+	if (!BarrelToSet || !TurretToSet) { return; }
 	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
-{
-	if (!TurretToSet)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s in %s:Unable to set Barrel!"), *GetName(), *GetOwner()->GetName());
-		return;
-	}
 	Turret = TurretToSet;
 }
 
